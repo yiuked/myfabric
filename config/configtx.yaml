@@ -16,7 +16,7 @@ Organizations:
                 Rule: "OR('OrdererMSP.member')"
             Writers:
                 Type: Signature
-                Rule: "OR('OrdererMSP.admin', 'OrdererMSP.member')"
+                Rule: "OR('OrdererMSP.member')"
             Admins:
                 Type: Signature
                 Rule: "OR('OrdererMSP.admin')"
@@ -105,8 +105,6 @@ Orderer: &OrdererDefaults
         BlockValidation:
             Type: ImplicitMeta
             Rule: "ANY Writers"
-    Capabilities:
-        <<: *OrdererCapabilities
 Channel: &ChannelDefaults
     Policies:
         Readers:
@@ -134,7 +132,8 @@ Profiles:
             Organizations:
                 # OrdererOrg是官方样板给出的名称，实际生产环境中可自定义
                 - *OrdererOrg
-        
+            Capabilities:
+                <<: *OrdererCapabilities
         # 定义了系统中包含的组织
         Consortiums:
             SampleConsortium:
@@ -146,7 +145,10 @@ Profiles:
     # 通道定义标识符，可自定义
     OneOrgsChannel:
         Consortium: SampleConsortium
+        <<: *ChannelDefaults
         Application:
             <<: *ApplicationDefaults
             Organizations:
                 - *Org1
+            Capabilities:
+                <<: *ApplicationCapabilities

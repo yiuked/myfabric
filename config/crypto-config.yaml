@@ -1,7 +1,7 @@
 OrdererOrgs:
   - Name: Orderer
     Domain: 36sn.com
-    EnableNodeOUs: true
+    EnableNodeOUs: false
     Specs:
       - Hostname: orderer
 
