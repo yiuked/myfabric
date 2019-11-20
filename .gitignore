@@ -2,3 +2,4 @@
 /logs/*
 /production/*
 /crypto-config/*
+.idea

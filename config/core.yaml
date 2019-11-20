@@ -182,8 +182,8 @@ chaincode:
         qscc: enable
     systemPlugins:
     logging:
-      level:  info
-      shim:   warning
+      level:  debug
+      shim:   debug
       format: '%{color}%{time:2006-01-02 15:04:05.000 MST} [%{module}] %{shortfunc} -> %{level:.4s} %{id:03x}%{color:reset} %{message}'
 ledger:
   blockchain:
