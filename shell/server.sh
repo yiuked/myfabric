@@ -9,6 +9,18 @@ export FABRIC_LOGGING_SPEC=info
 export FABRIC_CFG_PATH=/home/vagrant/fabric/config
 set +x
 
+function printHelp() {
+  echo "Usage: "
+  echo "  server.sh <mode>"
+  echo "    <mode> - one of 'start', 'restart', 'stop', 'help'"
+  echo "      - 'start' - start orderer and peer"
+  echo "      - 'restart' - restart orderer and peer"
+  echo "      - 'stop' - stop orderer and peer"
+  echo "      - 'help' - show help"
+  echo
+}
+
+
 function Stop(){
     echo "===================== Killing orderer and peer ... ===================== "
     set -x
@@ -35,5 +47,7 @@ elif [ "$1" == 'restart' ]; then
     Start
 elif [ "$1" == 'stop' ]; then
     Stop
+else
+    printHelp
 fi
 
