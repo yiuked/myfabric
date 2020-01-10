@@ -10,7 +10,6 @@ PeerOrgs:
     Domain: org1.36sn.com
     EnableNodeOUs: true
     Template:
-      Count: 1
+      Count: 2
     Users:
       Count: 1
-

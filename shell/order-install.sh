@@ -1,7 +1,6 @@
 #!/bin/bash
 
-CHANNEL_NAME="zsjr"
-APP_PATH=/home/vagrant/fabric
+source ./base.sh
 
 CAFILE=/home/vagrant/fabric/crypto-config/ordererOrganizations/36sn.com/orderers/orderer.36sn.com/msp/tlscacerts/tlsca.36sn.com-cert.pem
 

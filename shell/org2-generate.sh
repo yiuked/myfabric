@@ -1,7 +1,6 @@
 #!/bin/bash
 
-CHANNEL_NAME="zsjr"
-APP_PATH=/home/vagrant/fabric
+source ./base.sh
 
 echo "===================== Start generate org2 ===================== "
 set -x

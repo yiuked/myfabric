@@ -1,13 +1,8 @@
 #!/bin/bash
 
-CHANNEL_NAME="zsjr"
-APP_PATH=/home/vagrant/fabric
+source ./base.sh
 
-set -x
 export FABRIC_LOGGING_SPEC=DEBUG
-export FABRIC_LOGGING_SPEC=info
-export FABRIC_CFG_PATH=/home/vagrant/fabric/config
-set +x
 
 function printHelp() {
   echo "Usage: "
@@ -22,23 +17,45 @@ function printHelp() {
 
 
 function Stop(){
-    echo "===================== Killing orderer and peer ... ===================== "
-    set -x
-    ps aux|grep 'bin/peer'|awk '{print $2}'|xargs kill -9
-    ps aux|grep 'bin/orderer'|awk '{print $2}'|xargs kill -9
-    set +x
-    echo "===================== Killed orderer and peer ===================== "
+    StopPid ${APP_PATH}/logs/orderer.pid
+    StopPid ${APP_PATH}/logs/peer.pid
+}
+
+
+function StopPid {
+  if [ ! -f $1 ]; then
+     debug "\"$1\" is not a file"
+     return
+  fi
+  pid=`cat $1`
+  dir=$(dirname $1)
+  file=$(filename $1)
+  debug "Stopping node($file) in $dir with PID $pid ..."
+  if ps -p $pid > /dev/null
+  then
+     kill -9 $pid
+     wait $pid 2>/dev/null
+     rm -f $1
+     debug "Stopped node in $dir with PID $pid"
+  fi
 }
 
 function Start(){
-    set -x
-    ${APP_PATH}/bin/orderer start >>${APP_PATH}/logs/orderer.log 2>&1 &
-    ${APP_PATH}/bin/peer node start >>${APP_PATH}/logs/peer.log 2>&1 &
-    set +x
+    debug "Start orderer ..."
+    ${APP_PATH}/bin/orderer start > ${APP_PATH}/logs/orderer.log 2>&1&
+    echo $! > ${APP_PATH}/logs/orderer.pid
+    if [ $! -gt 0 ];then
+        debug "Start success"
+    fi
+    
+    debug "Start peer ..."
+    ${APP_PATH}/bin/peer node start > ${APP_PATH}/logs/peer.log 2>&1&
+    echo $! > ${APP_PATH}/logs/peer.pid
+        if [ $! -gt 0 ];then
+        debug "Start success"
+    fi
     echo
 }
-
-
 
 if [ "$1" == "start" ]; then
     Start
