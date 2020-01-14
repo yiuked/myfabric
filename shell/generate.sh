@@ -2,6 +2,7 @@
 
 source ./base.sh
 
+SYS_CHANNEL=first-channel
 ps aux|grep 'bin/peer'|awk '{print $2}'|xargs kill -9 2> /dev/null
 ps aux|grep 'bin/orderer'|awk '{print $2}'|xargs kill -9 2> /dev/null
 
@@ -21,7 +22,7 @@ if [ $res -ne 0 ]; then
     fatal "Failed to generate certificates..."
 fi
 set -x
-${APP_PATH}/bin/configtxgen -channelID ${CHANNEL_NAME} -profile OneOrgsOrdererGenesis -outputBlock ${APP_PATH}/channel-artifacts/mygenesis.block
+${APP_PATH}/bin/configtxgen -channelID ${SYS_CHANNEL} -profile OneOrgsOrdererGenesis -outputBlock ${APP_PATH}/channel-artifacts/mygenesis.block
 res=$?
 set +x
 if [ $res -ne 0 ]; then

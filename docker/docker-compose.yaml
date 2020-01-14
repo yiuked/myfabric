@@ -9,19 +9,6 @@ networks:
   byfn:
 
 services:
-   couchdb.orderer.36sn.com:
-    container_name: couchdb.orderer.36sn.com
-    image: hyperledger/fabric-couchdb
-    environment:
-      - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=admin
-    volumes:
-        - /home/vagrant/fabric/data/orderer.36sn.com:/var/couchdb/data
-    ports:
-      - 5984:5984
-    networks:
-      - byfn
-      
    orderer.36sn.com:
     container_name: orderer.36sn.com
     image: hyperledger/fabric-orderer:latest
@@ -51,8 +38,6 @@ services:
         - /home/vagrant/fabric/production/orderer:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
-    depends_on:
-      - couchdb.orderer.36sn.com
     networks:
       - byfn
 
@@ -91,7 +76,7 @@ services:
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=host
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.org1.36sn.com:5985
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.org1.36sn.com:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=admin
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
