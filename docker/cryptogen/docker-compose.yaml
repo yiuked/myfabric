@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+   cryptogen:
+    container_name: docker_cryptogen
+    image: ubuntu:latest
+    environment:
+      - COUCHDB_USER=admin
+    working_dir: /opt/fabric/scripts
+    command: ./generate.sh
+    volumes:
+        - ./config:/opt/fabric/config
+        - ./scripts:/opt/fabric/scripts
+        - ../../bin:/opt/fabric/bin
+        - ../../crypto-config:/opt/fabric/crypto-config
+        - ../../channel-artifacts:/opt/fabric/channel-artifacts
